@@ -1,7 +1,8 @@
 version: v1beta1
 build:
   roots:
-    - protos
+    - fabric-protos
+    - fabric-gateway/protos
 lint:
   use:
     - BASIC
