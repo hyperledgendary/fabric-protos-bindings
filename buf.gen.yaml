@@ -1,5 +1,5 @@
 version: v1beta1
 plugins:
   - name: rust
-    out: gen/rust
+    out: fabric-gateway-protos-rust/src
 

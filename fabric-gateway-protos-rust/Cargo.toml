@@ -1,0 +1,16 @@
+[package]
+name = "fabric_gateway_protos"
+description = """
+Rust library for encoding and decoding Hyperledger Fabric Gateway messages (generated)
+"""
+version = "0.1.0"
+readme = "README.md"
+authors = ["Hyperledger Fabric Developers"]
+license = "Apache-2.0"
+keywords = ["serialization", "protobuf"]
+categories = ["encoding"]
+repository = "https://github.com/jt-nti/fabric-gateway-protos"
+edition = "2018"
+
+[dependencies]
+protobuf = "2.17.0"

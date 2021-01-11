@@ -1,1 +1,4 @@
-gen/
+/fabric-gateway-protos-rust/target
+/fabric-gateway-protos-rust/Cargo.lock
+/fabric-gateway-protos-rust/src/**/*.rs
+!/fabric-gateway-protos-rust/src/lib.rs
