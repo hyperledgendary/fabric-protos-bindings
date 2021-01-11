@@ -1,8 +1,8 @@
 [submodule "fabric-protos"]
 	path = fabric-protos
-	url = ../hyperledger/fabric-protos.git
+	url = ../../hyperledger/fabric-protos.git
 	branch = master
 [submodule "fabric-gateway"]
 	path = fabric-gateway
-	url = ../hyperledger/fabric-gateway.git
+	url = ../../hyperledger/fabric-gateway.git
 	branch = master
