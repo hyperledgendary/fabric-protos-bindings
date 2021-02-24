@@ -2,4 +2,11 @@ version: v1beta1
 plugins:
   - name: rust
     out: fabric-protos-rust/src
-
+  - name: go
+    out: fabric-protos-go
+    opt: paths=source_relative
+    strategy: all
+  - name: go-grpc
+    out: fabric-protos-go
+    opt: paths=source_relative
+    strategy: all

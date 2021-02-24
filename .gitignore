@@ -1,3 +1,8 @@
+# Any local copy of the fabric protos
+/fabric-protos
+
+/fabric-protos-go/**/*.pb.go
+
 /fabric-protos-rust/target
 /fabric-protos-rust/Cargo.lock
 /fabric-protos-rust/src/**/*.rs
