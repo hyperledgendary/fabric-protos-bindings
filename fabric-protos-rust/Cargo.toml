@@ -9,7 +9,7 @@ authors = ["Hyperledger Fabric Developers"]
 license = "Apache-2.0"
 keywords = ["serialization", "protobuf"]
 categories = ["encoding"]
-repository = "https://github.com/jt-nti/fabric-gateway-protos"
+repository = "https://github.com/jt-nti/fabric-protos-bindings"
 edition = "2018"
 
 [dependencies]

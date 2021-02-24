@@ -1,4 +1,4 @@
-/fabric-gateway-protos-rust/target
-/fabric-gateway-protos-rust/Cargo.lock
-/fabric-gateway-protos-rust/src/**/*.rs
-!/fabric-gateway-protos-rust/src/lib.rs
+/fabric-protos-rust/target
+/fabric-protos-rust/Cargo.lock
+/fabric-protos-rust/src/**/*.rs
+!/fabric-protos-rust/src/lib.rs

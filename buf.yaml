@@ -2,7 +2,6 @@ version: v1beta1
 build:
   roots:
     - fabric-protos
-    - fabric-gateway/protos
 lint:
   use:
     - BASIC
@@ -20,7 +19,7 @@ lint:
       - msp/msp_principal.proto
     FIELD_LOWER_SNAKE_CASE:
       - common/ledger.proto
-      - gateway.proto
+      - gateway/gateway.proto
       - gossip/message.proto
       - peer/chaincode_shim.proto
       - peer/lifecycle/db.proto
