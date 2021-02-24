@@ -1,4 +1,0 @@
-[submodule "fabric-protos"]
-	path = fabric-protos
-	url = ../../hyperledger/fabric-protos.git
-	branch = master
