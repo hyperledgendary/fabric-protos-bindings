@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-protos-go
+module github.com/hyperledgendary/fabric-protos-go
 
 go 1.15
 

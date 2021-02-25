@@ -26,6 +26,8 @@ BUF_INSTALL_FROM_SOURCE := false
 
 PROTOC_GEN_GO_VERSION := v1.25.0
 PROTOC_GEN_GO_GRPC_VERSION := v1.1.0
+TS_PROTOC_GEN_VERSION := 0.14.0
+GRPC_TOOLS_VERSION := 1.10.0
 
 ### Everything below this line is meant to be static, i.e. only adjust the above variables. ###
 
@@ -96,12 +98,40 @@ $(PROTOC_GEN_GO_GRPC):
 	@mkdir -p $(dir $(PROTOC_GEN_GO_GRPC))
 	@touch $(PROTOC_GEN_GO_GRPC)
 
+# TS_PROTOC_GEN points to the marker file for the installed version.
+#
+# If TS_PROTOC_GEN_VERSION is changed, the binary will be re-downloaded.
+TS_PROTOC_GEN := $(CACHE_VERSIONS)/ts-protoc-gen/$(TS_PROTOC_GEN_VERSION)
+$(TS_PROTOC_GEN):
+	@rm -f $(CACHE_BIN)/protoc-gen-ts
+	@mkdir -p $(CACHE_BIN)
+	$(eval TS_PROTOC_GEN_TMP := $(shell mktemp -d))
+	cd $(TS_PROTOC_GEN_TMP); npm install --prefix $(CACHE) -g ts-protoc-gen@$(TS_PROTOC_GEN_VERSION)
+	@rm -rf $(TS_PROTOC_GEN_TMP)
+	@rm -rf $(dir $(TS_PROTOC_GEN))
+	@mkdir -p $(dir $(TS_PROTOC_GEN))
+	@touch $(TS_PROTOC_GEN)
+
+# TS_PROTOC_GEN points to the marker file for the installed version.
+#
+# If GRPC_TOOLS_VERSION is changed, the binary will be re-downloaded.
+GRPC_TOOLS := $(CACHE_VERSIONS)/grpc-tools/$(GRPC_TOOLS_VERSION)
+$(GRPC_TOOLS):
+	@rm -f $(CACHE_BIN)/grpc_tools_node_protoc $(CACHE_BIN)/grpc_tools_node_protoc_plugin
+	@mkdir -p $(CACHE_BIN)
+	$(eval GRPC_TOOLS_TMP := $(shell mktemp -d))
+	cd $(TGRPC_TOOLS_TMP); npm install --prefix $(CACHE) -g grpc-tools@$(GRPC_TOOLS_VERSION)
+	@rm -rf $(GRPC_TOOLS_TMP)
+	@rm -rf $(dir $(GRPC_TOOLS))
+	@mkdir -p $(dir $(GRPC_TOOLS))
+	@touch $(GRPC_TOOLS)
+
 .DEFAULT_GOAL := local
 
 # deps allows us to install deps without running any checks.
 
 .PHONY: deps
-deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC)
+deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(TS_PROTOC_GEN) $(GRPC_TOOLS)
 
 # local is what we run when testing locally.
 # This does breaking change detection against our local git repository.
