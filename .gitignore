@@ -7,3 +7,7 @@
 /fabric-protos-rust/Cargo.lock
 /fabric-protos-rust/src/**/*.rs
 !/fabric-protos-rust/src/lib.rs
+
+/fabric-protos-node/node_modules/
+/fabric-protos-node/**/*_pb.*
+/fabric-protos-node/**/*_pb_service.*

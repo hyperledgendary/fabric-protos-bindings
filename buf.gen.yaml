@@ -1,7 +1,5 @@
 version: v1beta1
 plugins:
-  - name: rust
-    out: fabric-protos-rust/src
   - name: go
     out: fabric-protos-go
     opt: paths=source_relative
@@ -10,3 +8,20 @@ plugins:
     out: fabric-protos-go
     opt: paths=source_relative
     strategy: all
+  - name: rust
+    out: fabric-protos-rust/src
+  - name: js
+    out: fabric-protos-node
+    opt:
+      - import_style=commonjs
+      - binary
+  - name: ts
+    out: fabric-protos-node
+    opt:
+      - service=grpc-node
+      - mode=grpc-js
+  - name: grpc
+    path: grpc_tools_node_protoc_plugin
+    out: fabric-protos-node
+    opt:
+      - mode=grpc-js

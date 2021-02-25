@@ -1,0 +1,16 @@
+{
+    "name": "@hyperledgendary/fabric-protos",
+    "version": "0.1.0",
+    "description": "Hyperledger Fabric gRPC and Protocol Buffer Bindings",
+    "keywords": [
+        "serialization",
+        "protobuf",
+        "grpc"
+    ],
+    "author": "Hyperledgendary Fabric Developers",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@types/google-protobuf": "^3.7.2",
+        "google-protobuf": "^3.12.2"
+    }
+}

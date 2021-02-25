@@ -1,4 +1,3 @@
-# Hyperledger Fabric gRPC and Protocol Buffer Bindings for go
+# Hyperledger Fabric gRPC and Protocol Buffer Bindings for Go
 
-This repository contains the Hyperledger Fabric [grpc] service and [protocol
-buffer][protobuf] bindings for [go].
+This repository contains the Hyperledger Fabric gRPC service and protobuf bindings for Go.
