@@ -10,6 +10,8 @@ plugins:
     strategy: all
   - name: rust
     out: fabric-protos-rust/src
+  - name: rust-grpc
+    out: fabric-protos-rust/src
   - name: js
     out: fabric-protos-node
     opt:

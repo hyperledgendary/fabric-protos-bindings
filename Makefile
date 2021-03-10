@@ -28,6 +28,7 @@ PROTOC_GEN_GO_VERSION := v1.25.0
 PROTOC_GEN_GO_GRPC_VERSION := v1.1.0
 TS_PROTOC_GEN_VERSION := 0.14.0
 GRPC_TOOLS_VERSION := 1.10.0
+GRPC_COMPILER_VERSION := 0.8.3
 
 ### Everything below this line is meant to be static, i.e. only adjust the above variables. ###
 
@@ -112,7 +113,7 @@ $(TS_PROTOC_GEN):
 	@mkdir -p $(dir $(TS_PROTOC_GEN))
 	@touch $(TS_PROTOC_GEN)
 
-# TS_PROTOC_GEN points to the marker file for the installed version.
+# GRPC_TOOLS points to the marker file for the installed version.
 #
 # If GRPC_TOOLS_VERSION is changed, the binary will be re-downloaded.
 GRPC_TOOLS := $(CACHE_VERSIONS)/grpc-tools/$(GRPC_TOOLS_VERSION)
@@ -120,18 +121,32 @@ $(GRPC_TOOLS):
 	@rm -f $(CACHE_BIN)/grpc_tools_node_protoc $(CACHE_BIN)/grpc_tools_node_protoc_plugin
 	@mkdir -p $(CACHE_BIN)
 	$(eval GRPC_TOOLS_TMP := $(shell mktemp -d))
-	cd $(TGRPC_TOOLS_TMP); npm install --prefix $(CACHE) -g grpc-tools@$(GRPC_TOOLS_VERSION)
+	cd $(GRPC_TOOLS_TMP); npm install --prefix $(CACHE) -g grpc-tools@$(GRPC_TOOLS_VERSION)
 	@rm -rf $(GRPC_TOOLS_TMP)
 	@rm -rf $(dir $(GRPC_TOOLS))
 	@mkdir -p $(dir $(GRPC_TOOLS))
 	@touch $(GRPC_TOOLS)
+
+# GRPC_COMPILER points to the marker file for the installed version.
+#
+# If GRPC_COMPILER_VERSION is changed, the binary will be re-downloaded.
+GRPC_COMPILER := $(CACHE_VERSIONS)/grpc-compiler/$(GRPC_COMPILER_VERSION)
+$(GRPC_COMPILER):
+	@rm -f $(CACHE_BIN)/protoc-gen-rust-grpc
+	@mkdir -p $(CACHE_BIN)
+	$(eval GRPC_COMPILER_TMP := $(shell mktemp -d))
+	cd $(GRPC_COMPILER_TMP); cargo install grpc-compiler --version $(GRPC_COMPILER_VERSION) --locked --root $(CACHE)
+	@rm -rf $(GRPC_COMPILER_TMP)
+	@rm -rf $(dir $(GRPC_COMPILER))
+	@mkdir -p $(dir $(GRPC_COMPILER))
+	@touch $(GRPC_COMPILER)
 
 .DEFAULT_GOAL := local
 
 # deps allows us to install deps without running any checks.
 
 .PHONY: deps
-deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(TS_PROTOC_GEN) $(GRPC_TOOLS)
+deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(TS_PROTOC_GEN) $(GRPC_TOOLS) $(GRPC_COMPILER)
 
 # local is what we run when testing locally.
 # This does breaking change detection against our local git repository.
