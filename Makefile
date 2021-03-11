@@ -28,11 +28,19 @@ PROTOC_GEN_GO_VERSION := v1.25.0
 PROTOC_GEN_GO_GRPC_VERSION := v1.1.0
 TS_PROTOC_GEN_VERSION := 0.14.0
 GRPC_TOOLS_VERSION := 1.10.0
+PROTOC_GEN_GRPC_JAVA_VERSION := 1.36.0
 
 ### Everything below this line is meant to be static, i.e. only adjust the above variables. ###
 
 UNAME_OS := $(shell uname -s)
 UNAME_ARCH := $(shell uname -m)
+ifeq ($(UNAME_OS),Darwin)
+	OS_NAME := osx
+else ifeq ($(UNAME_OS),Linux)
+	OS_NAME := linux
+else
+	OS_NAME := windows
+endif
 # Buf will be cached to ~/.cache/fabric-protos-bindings.
 CACHE_BASE := $(HOME)/.cache/$(PROJECT)
 # This allows switching between i.e a Docker container and your local setup without overwriting.
@@ -112,7 +120,7 @@ $(TS_PROTOC_GEN):
 	@mkdir -p $(dir $(TS_PROTOC_GEN))
 	@touch $(TS_PROTOC_GEN)
 
-# TS_PROTOC_GEN points to the marker file for the installed version.
+# GRPC_TOOLS points to the marker file for the installed version.
 #
 # If GRPC_TOOLS_VERSION is changed, the binary will be re-downloaded.
 GRPC_TOOLS := $(CACHE_VERSIONS)/grpc-tools/$(GRPC_TOOLS_VERSION)
@@ -120,18 +128,35 @@ $(GRPC_TOOLS):
 	@rm -f $(CACHE_BIN)/grpc_tools_node_protoc $(CACHE_BIN)/grpc_tools_node_protoc_plugin
 	@mkdir -p $(CACHE_BIN)
 	$(eval GRPC_TOOLS_TMP := $(shell mktemp -d))
-	cd $(TGRPC_TOOLS_TMP); npm install --prefix $(CACHE) -g grpc-tools@$(GRPC_TOOLS_VERSION)
+	cd $(GRPC_TOOLS_TMP); npm install --prefix $(CACHE) -g grpc-tools@$(GRPC_TOOLS_VERSION)
 	@rm -rf $(GRPC_TOOLS_TMP)
 	@rm -rf $(dir $(GRPC_TOOLS))
 	@mkdir -p $(dir $(GRPC_TOOLS))
 	@touch $(GRPC_TOOLS)
+
+# PROTOC_GEN_GRPC_JAVA points to the marker file for the installed version.
+#
+# If PROTOC_GEN_GRPC_JAVA_VERSION is changed, the binary will be re-downloaded.
+PROTOC_GEN_GRPC_JAVA := $(CACHE_VERSIONS)/protoc-gen-grpc-java/$(PROTOC_GEN_GRPC_JAVA_VERSION)
+$(PROTOC_GEN_GRPC_JAVA):
+	@rm -f $(CACHE_BIN)/protoc-gen-grpc-java
+	@mkdir -p $(CACHE_BIN)
+	$(eval PROTOC_GEN_GRPC_JAVA_TMP := $(shell mktemp -d))
+	cd $(PROTOC_GEN_GRPC_JAVA_TMP); curl -sSL \
+		"https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/$(PROTOC_GEN_GRPC_JAVA_VERSION)/protoc-gen-grpc-java-$(PROTOC_GEN_GRPC_JAVA_VERSION)-$(OS_NAME)-$(UNAME_ARCH).exe" \
+		-o "$(CACHE_BIN)/protoc-gen-grpc-java"
+	chmod +x "$(CACHE_BIN)/protoc-gen-grpc-java"
+	@rm -rf $(PROTOC_GEN_GRPC_JAVA_TMP)
+	@rm -rf $(dir $(PROTOC_GEN_GRPC_JAVA))
+	@mkdir -p $(dir $(PROTOC_GEN_GRPC_JAVA))
+	@touch $(PROTOC_GEN_GRPC_JAVA)
 
 .DEFAULT_GOAL := local
 
 # deps allows us to install deps without running any checks.
 
 .PHONY: deps
-deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(TS_PROTOC_GEN) $(GRPC_TOOLS)
+deps: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(TS_PROTOC_GEN) $(GRPC_TOOLS) $(PROTOC_GEN_GRPC_JAVA)
 
 # local is what we run when testing locally.
 # This does breaking change detection against our local git repository.

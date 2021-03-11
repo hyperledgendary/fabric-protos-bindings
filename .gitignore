@@ -3,6 +3,8 @@
 
 /fabric-protos-go/**/*.pb.go
 
+/fabric-protos-java/target
+
 /fabric-protos-rust/target
 /fabric-protos-rust/Cargo.lock
 /fabric-protos-rust/src/**/*.rs

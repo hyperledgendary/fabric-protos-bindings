@@ -8,8 +8,10 @@ plugins:
     out: fabric-protos-go
     opt: paths=source_relative
     strategy: all
-  - name: rust
-    out: fabric-protos-rust/src
+  - name: java
+    out: fabric-protos-java/target/generated-sources/protobuf/java
+  - name: grpc-java
+    out: fabric-protos-java/target/generated-sources/grpc/java
   - name: js
     out: fabric-protos-node
     opt:
