@@ -28,7 +28,8 @@ PROTOC_GEN_GO_VERSION := v1.25.0
 PROTOC_GEN_GO_GRPC_VERSION := v1.1.0
 TS_PROTOC_GEN_VERSION := 0.14.0
 GRPC_TOOLS_VERSION := 1.10.0
-GRPC_COMPILER_VERSION := 0.8.3
+GRPC_COMPILER_VERSION := tbc
+GRPC_COMPILER_REPO := https://github.com/stepancheg/grpc-rust
 
 ### Everything below this line is meant to be static, i.e. only adjust the above variables. ###
 
@@ -135,7 +136,7 @@ $(GRPC_COMPILER):
 	@rm -f $(CACHE_BIN)/protoc-gen-rust-grpc
 	@mkdir -p $(CACHE_BIN)
 	$(eval GRPC_COMPILER_TMP := $(shell mktemp -d))
-	cd $(GRPC_COMPILER_TMP); cargo install grpc-compiler --version $(GRPC_COMPILER_VERSION) --locked --root $(CACHE)
+	cd $(GRPC_COMPILER_TMP); cargo install grpc-compiler --git $(GRPC_COMPILER_REPO) --locked --root $(CACHE)
 	@rm -rf $(GRPC_COMPILER_TMP)
 	@rm -rf $(dir $(GRPC_COMPILER))
 	@mkdir -p $(dir $(GRPC_COMPILER))

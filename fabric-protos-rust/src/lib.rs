@@ -2,6 +2,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// TODO delete me? Codegen should be generating ::protobuf::well_known_types::
+// instead of a relative name?
+// See:
+// https://github.com/stepancheg/rust-protobuf/commit/653f8548f1817688c8816686728ce312d3f99168
+mod empty {
+    pub use protobuf::well_known_types::Empty;
+}
+
 // TODO generate this file in build.rs
 
 pub mod ab_grpc;
