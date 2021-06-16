@@ -5,15 +5,14 @@ Rust library for encoding and decoding Hyperledger Fabric Gateway messages (gene
 """
 version = "0.1.0"
 readme = "README.md"
-authors = ["Hyperledger Fabric Developers"]
+authors = ["Hyperledgendary Developers"]
 license = "Apache-2.0"
 keywords = ["serialization", "protobuf"]
 categories = ["encoding"]
-repository = "https://github.com/jt-nti/fabric-protos-bindings"
+repository = "https://github.com/hyperledgendary/fabric-protos-bindings"
 edition = "2018"
 
 [dependencies]
-grpc = "0.8.3"
-grpc-protobuf = "0.8.3"
-protobuf = "~2.18.2"
-protoc-rust = "~2.18.2"
+grpc = { git = "https://github.com/stepancheg/grpc-rust" }
+grpc-protobuf = { git = "https://github.com/stepancheg/grpc-rust" }
+protobuf = { version = "2.23", features = ["with-bytes"] }
